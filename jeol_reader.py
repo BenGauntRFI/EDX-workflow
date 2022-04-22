@@ -205,7 +205,16 @@ class JeolEDS:
             self.data = np.fromstring(fn.read(array_size*4), dtype=np.uint32)
             self.chnl_cnt = array_size
 
-
+class JeolPts:
+    def __init__(self, dictionary, parent):
+        self.spectra_type = 'eds'
+        self.parent = parent
+        for key in dictionary:
+            setattr(self, key.lower(), dictionary[key])
+        self.filename = os.path.join(self.parent.parent.parent.proj_dir,
+                                     self.filename)
+        with open(self.filename, 'br') as fn:
+            fn.seek(0x102)
 
 
 
